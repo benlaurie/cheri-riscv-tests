@@ -14,5 +14,6 @@ run: out/*
 		$(RUN) $$f; \
 	done
 
+# FIXME: this should check for failure!
 out/%: rv64ui/%.S
 	$(BUILD) $< -o $@

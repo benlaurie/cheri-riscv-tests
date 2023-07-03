@@ -27,8 +27,8 @@ mtvec_handler:
   
   cap_exception:
     // Restore DDC in case that's the problem
-    cspecialrw ct5, MTDC, c0
-    cspecialrw c0, DDC, ct5
+    cspecialr ct5, MTDC
+    cspecialw DDC, ct5
     // For this test, we are expecting an exception
     li t5, 3
     bne TESTNUM, t5, unexpected
