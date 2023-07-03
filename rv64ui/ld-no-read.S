@@ -9,6 +9,7 @@
 
 #include "cheri_riscv_test.h"
 #include "test_macros.h"
+#include "cherireg.h"
 
 #define DDC 1
 
@@ -35,7 +36,7 @@ mtvec_handler:
     RVTEST_PASS
  
 run_tests:
-  li x14, 0
+  li x14, ~CHERI_PERM_LOAD
   cspecialrw c15, DDC, c0
   candperm c15, c15, x14
   cspecialrw c0, DDC, c15
