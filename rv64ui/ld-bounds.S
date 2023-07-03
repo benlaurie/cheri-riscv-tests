@@ -9,6 +9,7 @@
 
 #include "cheri_riscv_test.h"
 #include "test_macros.h"
+#include "cherireg.h"
 
 #define DDC 1
 #define BASE tdat
@@ -30,10 +31,16 @@ mtvec_handler:
     cspecialrw c0, DDC, ct5
     // For this test, we are expecting an exception
     li t5, 3
-    beq TESTNUM, t5, expected
-    RVTEST_FAIL
-  expected:
+    bne TESTNUM, t5, unexpected
+    // And it had better be a "length" exception
+    csrr t5, mtval
+    andi t5, t5, 0x1f
+    li t6, CHERI_EXCCODE_LENGTH
+    bne t5, t6, unexpected
+
     RVTEST_PASS
+  unexpected:
+    RVTEST_FAIL
  
 run_tests:
 # switch into cap-mode
