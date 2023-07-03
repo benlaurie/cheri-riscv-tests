@@ -42,9 +42,9 @@ mtvec_handler:
  
 run_tests:
   li x14, ~CHERI_PERM_LOAD
-  cspecialrw c15, DDC, c0
+  cspecialr c15, DDC
   candperm c15, c15, x14
-  cspecialrw c0, DDC, c15
+  cspecialw DDC, c15
 
   #-------------------------------------------------------------
   # Basic tests
